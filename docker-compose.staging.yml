@@ -2,20 +2,26 @@ version: '3.8'
 
 services:
   database:
-    image: postgres
+    image: postgres:15
     environment:
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ac2_ac
+      POSTGRES_DB: ac2-staging
     volumes:
-      - db-volume:/var/lib/postgresql/data
+      - db-staging-volume:/var/lib/postgresql/data
 
   api:
     image: matheusap27/ac2_ca:latest
-    networks:
-      - default  # Certifique-se de que está usando a rede adequada
     environment:
+      SPRING_PROFILES_ACTIVE: staging
       DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: ac2-staging
+      DB_USER: postgres
+      DB_PASSWORD: postgres
     ports:
-      - "8686:8080"
+      - "8082:8080"
+    depends_on:
+      - database
+
 volumes:
-  db-volume:
+  db-staging-volume:

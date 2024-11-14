@@ -1,22 +1,27 @@
-version: '3'
+version: '3.8'
 
 services:
   database:
-    image: postgres
+    image: postgres:15
     environment:
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ac2_ac
+      POSTGRES_DB: ac2-prod
     volumes:
-      - db-volume:/var/lib/postgresql/data
+      - db-prod-volume:/var/lib/postgresql/data
 
   api:
-    image: matheusap27/ac2_ca
+    image: matheusap27/ac2_ca:latest
     environment:
       SPRING_PROFILES_ACTIVE: prod
       DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: ac2-prod
+      DB_USER: postgres
+      DB_PASSWORD: postgres
     ports:
-      - "8686:8686"
+      - "8081:8080"
     depends_on:
       - database
+
 volumes:
-  db-volume:
+  db-prod-volume:
