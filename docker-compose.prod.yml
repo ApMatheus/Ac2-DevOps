@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: ac2-prod
     volumes:
-      - db-prod-volume:/var/lib/postgresql/data
+      - db-prod:/var/lib/postgresql/data
 
   api:
     image: matheusap27/ac2_ca:latest
@@ -24,4 +24,4 @@ services:
       - database
 
 volumes:
-  db-prod-volume:
+  db-prod:
