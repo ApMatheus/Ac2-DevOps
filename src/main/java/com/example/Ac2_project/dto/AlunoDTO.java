@@ -1,53 +1,46 @@
 package com.example.Ac2_project.dto;
 
+import com.example.Ac2_project.entity.aluno.Aluno;
+import com.example.Ac2_project.entity.curso.Curso;
+import com.example.Ac2_project.entity.plataforma.PlataformaCursos;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
-import com.example.Ac2_project.entity.curso.Curso;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AlunoDTO {
+  private String id;
   private String nome;
-  private String senha;
-  private List<Curso> cursos;
   private boolean isPremium;
   private int moedas;
+  private PlataformaCursos plataforma;
+  private List<Curso> cursos;
 
-  public String getSenha() {
-    return senha;
+  public static AlunoDTO fromEntity(Aluno aluno) {
+    return AlunoDTO.builder()
+        .id(aluno.getId())
+        .nome(aluno.getNome())
+        .isPremium(aluno.isPremium())
+        .moedas(aluno.getMoedas())
+        .plataforma(aluno.getPlataforma())
+        .cursos(aluno.getCursos())
+        .build();
   }
 
-  public void setSenha(String senha) {
-    this.senha = senha;
-  }
-
-  public List<Curso> getCursos() {
-    return cursos;
-  }
-
-  public void setCursos(List<Curso> cursos) {
-    this.cursos = cursos;
-  }
-
-  public boolean isPremium() {
-    return isPremium;
-  }
-
-  public void setPremium(boolean isPremium) {
-    this.isPremium = isPremium;
-  }
-
-  public int getMoedas() {
-    return moedas;
-  }
-
-  public void setMoedas(int moedas) {
-    this.moedas = moedas;
-  }
-
-  public String getNome() {
-    return nome;
-  }
-
-  public void setNome(String nome) {
-    this.nome = nome;
+  public static Aluno toEntity(AlunoDTO alunoDTO) {
+    return Aluno.builder()
+        .id(alunoDTO.getId())
+        .nome(alunoDTO.getNome())
+        .isPremium(alunoDTO.isPremium())
+        .moedas(alunoDTO.getMoedas())
+        .plataforma(alunoDTO.getPlataforma())
+        .cursos(alunoDTO.getCursos())
+        .build();
   }
 }
